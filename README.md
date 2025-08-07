@@ -37,12 +37,14 @@ uv sync --dev
 ### 基本用法
 
 ```python
+from datetime import datetime, timezone
 from pow2core.config.load_config import LoadMineSeasonConfig
 from pow2core.cpu.calculator import CPUCalculator
 
+now = datetime.now(timezone.utc)
 # 加载赛季配置
 config_loader = LoadMineSeasonConfig()
-season_config = config_loader.load_config("gcw-s6")
+season_config = config_loader.load_config("example-s1")
 
 # 创建CPU计算器
 calculator = CPUCalculator(season_config.cpu)
@@ -50,14 +52,21 @@ calculator.load_factors()
 
 # 计算NFT的挖矿权重
 nft_data = {
-    "rare": 100,
-    "asset": 50000,
-    "volume": 1000.0,
-    # ... 其他因子数据
+    "rare": {"rare": 100},
+    "d_days": {"start_at": now-timedelta(days=10)},
+    "combination": {"ratio": Decimal(2)},
+    "listing": {
+        "listing_start_at": now-timedelta(days=3),
+        "listing_count": 0,
+    },
 }
 
 result = calculator.calculate(nft_data)
-print(f"计算结果: {result}")
+for factor_name, factor_weight in result.factor_weights.items():
+    print(f"factor: {factor_name}")
+    print(f"  weight: {factor_weight.weight}")
+    print(f"  value: {factor_weight.value}")
+print("cpu:", result.cpu)
 ```
 
 ### 配置文件示例

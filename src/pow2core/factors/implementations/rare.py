@@ -51,4 +51,6 @@ class RareFactorByLinearNormalize(FactorByNormalize):
     def get_weight(self, rare: int) -> FactorWeightResult:
         """获取权重"""
         value = self.max_rare - rare + 1
-        return super().get_weight(value)
+        result = super().get_weight(value)
+        result.value = rare
+        return result
