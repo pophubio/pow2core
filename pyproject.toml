@@ -1,6 +1,6 @@
 [project]
 name = "pow2core"
-version = "0.1.0"
+version = "1.0.0"
 description = "Pow2Core is a core library for Pow2 mining calculations"
 readme = "README.md"
 authors = [
@@ -34,6 +34,7 @@ exclude = [
     "build",
     "dist",
     "tests",
+    "tmp",
 ]
 
 # Set the maximum line length
