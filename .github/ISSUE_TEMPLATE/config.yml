@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📧 Email Support
+    url: mailto:support@pophub.io
+    about: Contact us directly via email for urgent issues
+  - name: 💬 Discord Community
+    url: https://discord.gg/pophub
+    about: Join our Discord community for discussions and help
+  - name: 📖 Documentation
+    url: https://github.com/pophubio/pow2core#readme
+    about: Check our documentation for answers to common questions
