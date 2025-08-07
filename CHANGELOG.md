@@ -5,7 +5,7 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)，
 项目遵循 [语义化版本控制](https://semver.org/spec/v2.0.0.html) 规范。
 
-## [v1.0.0] - 2025-08-07
+## [1.0.0] - 2025-08-07
 
 ### 新增功能
 - **核心库架构**: 完整实现 Pow2Core 挖矿计算核心库
