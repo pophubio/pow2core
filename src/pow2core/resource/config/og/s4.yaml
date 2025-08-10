@@ -87,6 +87,24 @@ cpu:
         min_weight: 1  # 最小权重
         tz_hours: 8  # 时区偏移
 
+    # 是否正在挂单因子
+    - name: is_listing
+      priority: 0
+      config:
+        algorithm: fixed  # 固定值算法
+        weights:
+          true: 0  # 是正在挂单权重
+          false: 1  # 不是正在挂单权重
+
+    # POP用户因子
+    - name: pop_user
+      priority: 0
+      config:
+        algorithm: fixed  # 固定值算法
+        weights:
+          true: 1  # 是POP用户权重
+          false: 0  # 不是POP用户权重
+
 # 钻石奖励配置
 diamond:
   strategy: fixed_group  # 策略：固定组

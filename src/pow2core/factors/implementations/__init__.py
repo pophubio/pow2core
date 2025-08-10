@@ -4,7 +4,9 @@ from .combination import CombinationFactorByValue  # noqa: F401
 from .d_days import DDaysFactorByLinearNormalize  # noqa: F401
 from .listing_count import ListingCountFactorByThreshold  # noqa: F401
 from .listing_days import ListingDaysFactorByLinear  # noqa: F401
-from .listing import ListingFactor  # noqa: F401
+from .listing_stats import ListingStatsFactor  # noqa: F401
+from .is_listing import IsListingFactorByFixed  # noqa: F401
+from .pop_user import POPUserFactorByFixed  # noqa: F401
 from .rare import RareFactorByFixed, RareFactorByLinearNormalize  # noqa: F401
 from .slot import SlotFactorByFixed  # noqa: F401
 from .volume import VolumeFactorByLinear, VolumeFactorByLogNormalize  # noqa: F401

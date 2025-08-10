@@ -1,6 +1,7 @@
 from decimal import Decimal
 
 from .base import BaseFactor
+from ..const import FACTOR_ALGORITHM_VALUE
 from ..schema import FactorWeightResult
 
 
@@ -10,7 +11,7 @@ class FactorByValue(BaseFactor):
         """
         初始化值因子
         """
-        super().__init__(name, precision, **kwargs)
+        super().__init__(name, FACTOR_ALGORITHM_VALUE, precision, **kwargs)
 
     def get_weight(self, value: int | float | Decimal) -> FactorWeightResult:
         """获取权重"""

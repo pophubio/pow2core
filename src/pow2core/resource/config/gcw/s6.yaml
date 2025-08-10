@@ -39,7 +39,7 @@ cpu:
         algorithm: normalize  # 归一化算法
         method: linear  # 线性归一化
         multiplier: 10  # 倍数调节
-        created_at: "2025-02-06 10:16:07+00"  # 合集创建时间
+        created_at: "2024-11-29 02:09:52+00"  # 合集创建时间
         tz_hours: 8  # 时区偏移
 
     # 交易量因子
@@ -62,8 +62,8 @@ cpu:
         interval: 0.025  # 区间步长
         precision: 3  # 精度
 
-    # 挂单因子
-    - name: listing
+    # 挂单统计因子
+    - name: listing_stats
       priority: 2  # 优先级2
       children:
         # 挂单天数子因子
@@ -90,6 +90,24 @@ cpu:
               - 20  # 高阈值
               - 10  # 中阈值
               - 0   # 低阈值
+
+    # 是否正在挂单因子
+    - name: is_listing
+      priority: 0
+      config:
+        algorithm: fixed  # 固定值算法
+        weights:
+          true: 0  # 是正在挂单权重
+          false: 1  # 不是正在挂单权重
+
+    # POP用户因子
+    - name: pop_user
+      priority: 0
+      config:
+        algorithm: fixed  # 固定值算法
+        weights:
+          true: 1  # 是POP用户权重
+          false: 0  # 不是POP用户权重
 
 # 钻石分配策略配置
 diamond:

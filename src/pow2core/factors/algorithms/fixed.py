@@ -2,6 +2,7 @@ from decimal import Decimal
 
 from .base import BaseFactor
 from ..schema import FactorWeightResult
+from ..const import FACTOR_ALGORITHM_FIXED
 
 
 class FactorByFixed(BaseFactor):
@@ -14,7 +15,7 @@ class FactorByFixed(BaseFactor):
             name: Factor name
             weights: Dictionary of weights: {value: weight}
         """
-        super().__init__(name, precision, **kwargs)
+        super().__init__(name, FACTOR_ALGORITHM_FIXED, precision, **kwargs)
         if not weights:
             raise ValueError("Weights must be provided")
         self.weights = weights

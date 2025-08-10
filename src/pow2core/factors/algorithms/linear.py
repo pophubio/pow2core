@@ -2,6 +2,7 @@ from decimal import Decimal
 
 from .base import BaseFactor
 from ..schema import FactorWeightResult
+from ..const import FACTOR_ALGORITHM_LINEAR
 
 
 class FactorByLinear(BaseFactor):
@@ -27,7 +28,7 @@ class FactorByLinear(BaseFactor):
             max_weight: 最大权重 (default: 5.00)
             precision: 权重精度 (default: 2)
         """
-        super().__init__(name=name, precision=precision, **kwargs)
+        super().__init__(name=name, algorithm=FACTOR_ALGORITHM_LINEAR, precision=precision, **kwargs)
         self.max_value = Decimal(str(max_value))
         self.min_weight = Decimal(str(min_weight))
         self.max_weight = Decimal(str(max_weight))

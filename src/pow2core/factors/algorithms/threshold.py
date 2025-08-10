@@ -1,6 +1,7 @@
 from decimal import Decimal
 
 from .base import BaseFactor
+from ..const import FACTOR_ALGORITHM_THRESHOLD
 from ..schema import FactorWeightResult
 
 
@@ -17,7 +18,7 @@ class FactorByThreshold(BaseFactor):
         """
         初始化阈值计算因子
         """
-        super().__init__(name, precision, **kwargs)
+        super().__init__(name, FACTOR_ALGORITHM_THRESHOLD, precision, **kwargs)
         if len(thresholds) != len(weights):
             raise ValueError("Thresholds and weights must have the same length")
 

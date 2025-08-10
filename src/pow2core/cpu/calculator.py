@@ -36,6 +36,9 @@ class CPUCalculator:
         if "method" in impl_config:
             impl_config.pop("method")
 
+        if "algorithm" in impl_config:
+            impl_config.pop("algorithm")
+
         if factor_config.name in [FACTOR_NAME_DDAYS, FACTOR_NAME_LISTING_DAYS]:
             impl_config["now"] = self.now
 

@@ -50,8 +50,8 @@ cpu:
         interval: 0.025  # 区间步长
         precision: 3  # 精度
 
-    # 挂单因子
-    - name: listing
+    # 挂单统计因子
+    - name: listing_stats
       priority: 2  # 优先级2
       children:
         # 挂单天数子因子

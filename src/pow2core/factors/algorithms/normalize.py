@@ -4,7 +4,7 @@ from typing import Literal
 import numpy as np
 
 from .base import BaseFactor
-from ..const import NORMALIZE_METHOD_LINEAR, NORMALIZE_METHOD_LOG
+from ..const import NORMALIZE_METHOD_LINEAR, NORMALIZE_METHOD_LOG, FACTOR_ALGORITHM_NORMALIZE
 from ..schema import FactorWeightResult
 
 
@@ -43,7 +43,7 @@ class FactorByNormalize(BaseFactor):
             tolerance: 归一化比例误差
             precision: 权重精度
         """
-        super().__init__(name, precision, **kwargs)
+        super().__init__(name, FACTOR_ALGORITHM_NORMALIZE, precision, **kwargs)
 
         if method not in (NORMALIZE_METHOD_LINEAR, NORMALIZE_METHOD_LOG):
             raise ValueError(f"Invalid normalization method: {method}")

@@ -27,40 +27,34 @@ class SlotFactorByFixed(FactorByFixed):
             precision=precision,
             **kwargs,
         )
-        self.token_ids_with_slot = []
+        self.tokens_with_slot: list[tuple[int, int]] = []
 
-    def update_tokens_with_slot(self, rare_balances: dict[int, list[int]]) -> list[int]:
+    def load_tokens_with_slot(self, rare_balances: dict[int, list[tuple[int, int]]]):
         """
         获取具有卡槽的tokenid列表
 
         Args:
-            rare_balances: 按照稀有度分组的tokenid列表
+            rare_balances: 按照稀有度分组的(collection_id, token_id)列表
 
         Returns:
-            list[int]: 具有卡槽的tokenid列表
+            list[tuple[int, int]]: 具有卡槽的(collection_id, token_id)列表
         """
         set_count = min([
             len(rare_balances[rare]) // self.rare_requirements[rare]
             for rare in self.rare_requirements
         ])
 
-        new_token_ids = [
-            token_id
+        new_tokens_with_slot = [
+            (collection_id, token_id)
             for rare in self.rare_requirements
-            for token_id in rare_balances[rare][:set_count * self.rare_requirements[rare]]
+            for collection_id, token_id in rare_balances[rare][:set_count * self.rare_requirements[rare]]
         ]
-        self.token_ids_with_slot.extend(new_token_ids)
+        self.tokens_with_slot.extend(new_tokens_with_slot)
 
-    def get_weight(self, token_id: int) -> FactorWeightResult:
+    def get_weight(self, collection_id: int, token_id: int) -> FactorWeightResult:
         """
         获取token的权重
-        调用之前应该调用 update_tokens_with_slot 更新 token_ids_with_slot
-
-        Args:
-            value: 是token_id
-
-        Returns:
-            Decimal: 权重
+        调用之前应该调用 load_tokens_with_slot 更新 tokens_with_slot
         """
-        value = token_id in self.token_ids_with_slot
+        value = (collection_id, token_id) in self.tokens_with_slot
         return super().get_weight(value)

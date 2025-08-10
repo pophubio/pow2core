@@ -1,6 +1,6 @@
-# Pow2Core
+# POW2Core
 
-Pow2Core 是一个用于 Pow2 挖矿计算的核心库，专门处理 NFT 挖矿中的因子计算和权重分配。
+POW2Core 是一个用于 POW2 挖矿计算的核心库，专门处理 NFT 挖矿中的因子计算和权重分配。
 
 ## ✨ 特性
 
@@ -55,7 +55,7 @@ nft_data = {
     "rare": {"rare": 100},
     "d_days": {"start_at": now-timedelta(days=10)},
     "combination": {"ratio": Decimal(2)},
-    "listing": {
+    "listing_stats": {
         "listing_start_at": now-timedelta(days=3),
         "listing_count": 0,
     },
@@ -101,7 +101,7 @@ cpu:
 
 ### 因子注册系统
 
-Pow2Core 使用装饰器注册模式管理因子实现：
+POW2Core 使用装饰器注册模式管理因子实现：
 
 ```python
 @FactorRegistry.register(
@@ -124,7 +124,12 @@ class AssetFactorByLogNormalize(FactorByNormalize):
 | volume | 交易量因子 | Linear, Normalize |
 | slot | 卡槽因子 | Fixed |
 | d_days | 持有天数因子 | Normalize |
-| listing | 挂单因子 | 复合因子 |
+| is_listing | 是否挂单因子 | Fixed |
+| listing_stats | 挂单统计因子 | 复合因子 |
+| listing_count | 挂单数量因子 | Linear, Threshold |
+| listing_days | 挂单天数因子 | Linear, Normalize |
+| combination | 组合因子 | Value |
+| pop_user | 用户特权因子 | Fixed |
 
 ### 算法类型
 
@@ -244,4 +249,4 @@ src/pow2core/
 
 ## 🙏 致谢
 
-感谢所有为 Pow2Core 项目做出贡献的开发者们！
+感谢所有为 POW2Core 项目做出贡献的开发者们！

@@ -2,7 +2,7 @@ from datetime import datetime, timezone, timedelta
 
 from pow2core.factors.implementations.listing_days import ListingDaysFactorByLinear
 from pow2core.factors.implementations.listing_count import ListingCountFactorByThreshold
-from pow2core.factors.implementations.listing import ListingFactor
+from pow2core.factors.implementations.listing_stats import ListingStatsFactor
 
 
 class TestListingDaysFactorByLinear:
@@ -23,7 +23,7 @@ class TestListingDaysFactorByLinear:
     )
 
     def test_real_listing_count(self):
-        factor = ListingFactor(
+        factor = ListingStatsFactor(
             listing_days_factor=self.listing_days_factor,
             listing_count_factor=self.listing_count_factor,
         )
@@ -45,7 +45,7 @@ class TestListingDaysFactorByLinear:
         assert result.children[self.listing_days_factor.name].weight == listing_days_weight.weight
 
     def test_real_listing_days(self):
-        factor = ListingFactor(
+        factor = ListingStatsFactor(
             listing_days_factor=self.listing_days_factor,
             listing_count_factor=self.listing_count_factor,
         )

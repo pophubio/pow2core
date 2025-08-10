@@ -1,7 +1,7 @@
 from datetime import datetime
 from decimal import Decimal
 
-from ..const import FACTOR_NAME_LISTING
+from ..const import FACTOR_NAME_LISTING_STATS
 from .listing_days import ListingDaysFactorByLinear
 from .listing_count import ListingCountFactorByThreshold
 from ..registry import FactorRegistry
@@ -9,11 +9,11 @@ from ..schema import FactorWeightResult
 
 
 @FactorRegistry.register(
-    name=FACTOR_NAME_LISTING,
+    name=FACTOR_NAME_LISTING_STATS,
 )
-class ListingFactor:
+class ListingStatsFactor:
     """
-    挂单因子是由挂单天数和挂单数量共同决定的
+    挂单统计因子是由挂单天数和挂单数量共同决定的
     如果挂单数量权重小于1, 则使用挂单数量作为权重, 否则使用挂单天数作为权重
     """
     def __init__(
@@ -21,7 +21,7 @@ class ListingFactor:
         listing_days_factor: ListingDaysFactorByLinear,
         listing_count_factor: ListingCountFactorByThreshold,
     ):
-        self.name = FACTOR_NAME_LISTING
+        self.name = FACTOR_NAME_LISTING_STATS
         self.listing_days_factor = listing_days_factor
         self.listing_count_factor = listing_count_factor
 

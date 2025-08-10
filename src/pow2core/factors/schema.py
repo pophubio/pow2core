@@ -95,3 +95,13 @@ class FactorWeightResult(BaseModel):
     value: int | float | Decimal = Field(description="因子值")
     weight: Decimal = Field(description="权重")
     children: dict[str, 'FactorWeightResult'] | None = Field(default=None, description="子因子权重结果")
+
+
+class POPUserFactorByFixedConfig(BaseFactorConfig):
+    """使用固定值计算POP用户权重配置"""
+    weights: dict[bool, int | Decimal] = Field(description="值与权重的映射")
+
+
+class IsListingFactorByFixedConfig(BaseFactorConfig):
+    """使用固定值计算是否正在挂单权重配置"""
+    weights: dict[bool, int | Decimal] = Field(description="值与权重的映射")

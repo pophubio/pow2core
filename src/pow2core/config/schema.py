@@ -5,7 +5,7 @@ from pydantic import BaseModel, ConfigDict, field_validator, Field
 
 from ..distribute_strategies.schema import FixedGroupStrategyConfig, LevelGroupStrategyConfig
 from ..factors.algorithms.base import BaseFactor
-from ..factors.implementations.listing import ListingFactor
+from ..factors.implementations.listing_stats import ListingStatsFactor
 from ..factors.schema import BaseFactorConfig
 
 
@@ -35,7 +35,7 @@ class FactorConfig(BaseModel):
     """因子配置"""
     name: str = Field(description="因子名称")
     priority: int = Field(description="优先级")
-    implementation: type[BaseFactor] | type[ListingFactor] = Field(description="实现类")
+    implementation: type[BaseFactor] | type[ListingStatsFactor] = Field(description="实现类")
     config: BaseFactorConfig | None = Field(default=None, description="因子配置")
     children: list['FactorConfig'] | None = Field(default=None, description="子因子")
 

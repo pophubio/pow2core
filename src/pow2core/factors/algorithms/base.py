@@ -18,6 +18,11 @@ class Factor(Protocol):
         """Get the name of the factor"""
         ...
 
+    @property
+    def algorithm(self) -> str:
+        """Get the algorithm of the factor"""
+        ...
+
     def get_weight(self, value: int | float | Decimal) -> FactorWeightResult:
         """Get weight of factor for the given value"""
         ...
@@ -25,14 +30,11 @@ class Factor(Protocol):
 
 class BaseFactor(ABC):  # noqa: B024
     """Base class for weight factors"""
-    def __init__(self, name: str, precision: int = 2, **kwargs):
-        self.factor_name = name
+    def __init__(self, name: str, algorithm: str, precision: int = 2, **kwargs):
+        self.name = name
+        self.algorithm = algorithm
         self.precision = precision
         self.kwargs = kwargs
-
-    @property
-    def name(self) -> str:
-        return self.factor_name
 
     def get_weight(self, value: int | float | Decimal) -> FactorWeightResult:  # noqa: B027
         """Get weight of factor for the given value"""
