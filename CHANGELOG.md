@@ -5,13 +5,14 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)，
 项目遵循 [语义化版本控制](https://semver.org/spec/v2.0.0.html) 规范。
 
-## [1.1.0] - 2025-08-10
+## [1.1.0] - 2025-08-13
 
 ### 新增功能
 - **因子系统重构**:
   - 新增 `is_listing` 因子：检测 NFT 是否正在挂单
   - 新增 `listing_stats` 因子：综合挂单统计分析，替代原有的 `listing` 因子
   - 新增 `pop_user` 因子：支持特定用户权重计算
+  - 新增 `mining_limit_reached` 因子：检测是否达到挖矿上限
   - 移除原有的 `listing` 因子，使用更精确的 `listing_stats` 替代
 
 - **算法改进**:

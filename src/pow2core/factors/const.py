@@ -21,3 +21,4 @@ FACTOR_NAME_LISTING_STATS = "listing_stats"  # 挂单统计因子
 FACTOR_NAME_RARE = "rare"  # 稀有度因子
 FACTOR_NAME_VOLUME = "volume"  # 交易量因子
 FACTOR_NAME_POP_USER = "pop_user"  # pop用户因子
+FACTOR_NAME_MINING_LIMIT_REACHED = "mining_limit_reached"  # 挖矿上限因子

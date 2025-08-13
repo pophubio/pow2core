@@ -43,6 +43,15 @@ cpu:
         tolerance: 0.1  # alpha容差
         alpha_step: 0.1  # alpha步长
 
+    # 是否达到挖矿上限因子
+    - name: mining_limit_reached
+      priority: 0
+      config:
+        algorithm: fixed  # 固定值算法
+        weights:
+          true: 0  # 达到挖矿上限权重
+          false: 1  # 未达到挖矿上限权重
+
 # 钻石奖励配置
 diamond:
   strategy: level_group  # 策略：按等级分组

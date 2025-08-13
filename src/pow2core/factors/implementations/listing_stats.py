@@ -20,10 +20,12 @@ class ListingStatsFactor:
         self,
         listing_days_factor: ListingDaysFactorByLinear,
         listing_count_factor: ListingCountFactorByThreshold,
+        **kwargs,
     ):
         self.name = FACTOR_NAME_LISTING_STATS
         self.listing_days_factor = listing_days_factor
         self.listing_count_factor = listing_count_factor
+        self.kwargs = kwargs
 
     def get_weight(self, listing_start_at: datetime, listing_count: int | Decimal) -> FactorWeightResult:
         """获取权重"""

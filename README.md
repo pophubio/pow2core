@@ -130,6 +130,7 @@ class AssetFactorByLogNormalize(FactorByNormalize):
 | listing_days | 挂单天数因子 | Linear, Normalize |
 | combination | 组合因子 | Value |
 | pop_user | 用户特权因子 | Fixed |
+| mining_limit_reached | 挖矿上限因子 | Fixed |
 
 ### 算法类型
 
