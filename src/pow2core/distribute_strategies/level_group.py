@@ -1,4 +1,5 @@
 from .fixed_group import FixedGroupStrategy
+from .schema import LevelGroupThresholdItem
 
 
 class LevelGroupStrategy:
@@ -12,7 +13,7 @@ class LevelGroupStrategy:
         self,
         group_ratios: list[float],
         base_diamond_groups: list[int],
-        level_thresholds: list[dict[str, int]],
+        level_thresholds: list[LevelGroupThresholdItem],
     ) -> None:
         """
         Args:
@@ -25,7 +26,7 @@ class LevelGroupStrategy:
 
         self.group_ratios = group_ratios
         self.base_diamond_groups = base_diamond_groups
-        self.level_thresholds = sorted(level_thresholds, key=lambda x: x["level"], reverse=True)
+        self.level_thresholds = sorted(level_thresholds, key=lambda x: x.level, reverse=True)
 
     def get_all_distributions(
         self,
@@ -79,13 +80,13 @@ class LevelGroupStrategy:
             tuple[list[int], list[int]]: 每组人数和每组中每人对应的钻石数
         """
         first_level_threshold = self.level_thresholds[-1]
-        if total_users < first_level_threshold["users"]:
-            total_users = first_level_threshold["users"]
+        if total_users < first_level_threshold.users:
+            total_users = first_level_threshold.users
             ratio = 1
         else:
             for level_threshold in self.level_thresholds:
-                ratio = total_users / level_threshold["users"]
-                if total_users > level_threshold["users"]:
+                ratio = total_users / level_threshold.users
+                if total_users > level_threshold.users:
                     break
 
         user_groups = [int(total_users * i) for i in self.group_ratios]

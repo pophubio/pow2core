@@ -17,12 +17,16 @@ class ListingCountFactorByThreshold(FactorByThreshold):
         self,
         thresholds: list[int | float | Decimal],
         weights: list[int | float | Decimal],
+        max_weight: Decimal = Decimal(1),
+        is_visible: bool = True,
         **kwargs,
     ):
         super().__init__(
             name=FACTOR_NAME_LISTING_COUNT,
             thresholds=thresholds,
             weights=weights,
+            max_weight=max_weight,
+            is_visible=is_visible,
             **kwargs,
         )
 

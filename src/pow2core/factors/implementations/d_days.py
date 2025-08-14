@@ -22,6 +22,8 @@ class DDaysFactorByLinearNormalize(FactorByNormalize):
         now: datetime,
         tz_hours: int = 8,  # 默认是北京时区
         precision: int = 2,
+        max_weight: Decimal = Decimal(1),
+        is_visible: bool = True,
         **kwargs,
     ):
         self.tz = timezone(timedelta(hours=tz_hours))
@@ -37,6 +39,8 @@ class DDaysFactorByLinearNormalize(FactorByNormalize):
             alpha=max_days * multiplier,
             method=NORMALIZE_METHOD_LINEAR,
             precision=precision,
+            max_weight=max_weight,
+            is_visible=is_visible,
             **kwargs,
         )
 

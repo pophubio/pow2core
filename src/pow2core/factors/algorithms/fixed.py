@@ -7,7 +7,15 @@ from ..const import FACTOR_ALGORITHM_FIXED
 
 class FactorByFixed(BaseFactor):
     """使用固定字典计算权重"""
-    def __init__(self, name: str, weights: dict[int | Decimal, int | Decimal], precision: int = 2, **kwargs):
+    def __init__(
+        self,
+        name: str,
+        weights: dict[int | Decimal, int | Decimal],
+        precision: int = 2,
+        max_weight: Decimal = Decimal(1),
+        is_visible: bool = True,
+        **kwargs,
+    ):
         """
         初始化固定因子
 
@@ -15,7 +23,7 @@ class FactorByFixed(BaseFactor):
             name: Factor name
             weights: Dictionary of weights: {value: weight}
         """
-        super().__init__(name, FACTOR_ALGORITHM_FIXED, precision, **kwargs)
+        super().__init__(name, FACTOR_ALGORITHM_FIXED, precision, max_weight, is_visible, **kwargs)
         if not weights:
             raise ValueError("Weights must be provided")
         self.weights = weights
@@ -26,5 +34,7 @@ class FactorByFixed(BaseFactor):
             raise ValueError("Value must be number")
         if value not in self.weights:
             raise ValueError(f"Value {value} not in weight keys")
-        weight = self._quantize(self.weights[value])
+
+        weight = min(self.weights[value], self.max_weight)
+        weight = self._quantize(weight)
         return FactorWeightResult(value=value, weight=weight)

@@ -17,12 +17,16 @@ class MiningLimitReachedFactorByFixed(FactorByFixed):
         self,
         weights: dict[bool, int | Decimal],
         precision: int = 2,
+        max_weight: Decimal = Decimal(1),
+        is_visible: bool = True,
         **kwargs,
     ):
         super().__init__(
             name=FACTOR_NAME_MINING_LIMIT_REACHED,
             weights=weights,
             precision=precision,
+            max_weight=max_weight,
+            is_visible=is_visible,
             **kwargs,
         )
 

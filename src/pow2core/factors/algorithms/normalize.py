@@ -26,6 +26,8 @@ class FactorByNormalize(BaseFactor):
         alpha_step: float = 0.1,
         tolerance: float = 0.1,
         precision: int = 2,
+        max_weight: Decimal = Decimal(1),
+        is_visible: bool = True,
         **kwargs,
     ):
         """
@@ -43,7 +45,14 @@ class FactorByNormalize(BaseFactor):
             tolerance: 归一化比例误差
             precision: 权重精度
         """
-        super().__init__(name, FACTOR_ALGORITHM_NORMALIZE, precision, **kwargs)
+        super().__init__(
+            name=name,
+            algorithm=FACTOR_ALGORITHM_NORMALIZE,
+            precision=precision,
+            max_weight=max_weight,
+            is_visible=is_visible,
+            **kwargs,
+        )
 
         if method not in (NORMALIZE_METHOD_LINEAR, NORMALIZE_METHOD_LOG):
             raise ValueError(f"Invalid normalization method: {method}")
@@ -120,6 +129,8 @@ class FactorByNormalize(BaseFactor):
         """获取权重"""
         if value not in self._weights:
             raise ValueError(f"Value {value} not in weight nums")
-        weight = self._quantize(self._weights[value])
+
+        weight = min(self._weights[value], self.max_weight)
+        weight = self._quantize(weight)
         return FactorWeightResult(value=value, weight=weight)
 

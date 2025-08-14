@@ -5,11 +5,12 @@ from ..const import FACTOR_NAME_LISTING_STATS
 from .listing_days import ListingDaysFactorByLinear
 from .listing_count import ListingCountFactorByThreshold
 from ..registry import FactorRegistry
-from ..schema import FactorWeightResult
+from ..schema import FactorWeightResult, ListingStatsFactorConfig
 
 
 @FactorRegistry.register(
     name=FACTOR_NAME_LISTING_STATS,
+    config_schema=ListingStatsFactorConfig,
 )
 class ListingStatsFactor:
     """
@@ -20,11 +21,15 @@ class ListingStatsFactor:
         self,
         listing_days_factor: ListingDaysFactorByLinear,
         listing_count_factor: ListingCountFactorByThreshold,
+        max_weight: Decimal = Decimal(1),
+        is_visible: bool = True,
         **kwargs,
     ):
         self.name = FACTOR_NAME_LISTING_STATS
         self.listing_days_factor = listing_days_factor
         self.listing_count_factor = listing_count_factor
+        self.max_weight = max_weight
+        self.is_visible = is_visible
         self.kwargs = kwargs
 
     def get_weight(self, listing_start_at: datetime, listing_count: int | Decimal) -> FactorWeightResult:

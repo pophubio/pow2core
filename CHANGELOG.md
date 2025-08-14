@@ -5,6 +5,14 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)，
 项目遵循 [语义化版本控制](https://semver.org/spec/v2.0.0.html) 规范。
 
+## [1.2.0] - 2025-08-14
+
+### 新增功能
+- **因子系统架构增强**:
+  - `BaseFactor` 基类新增 `max_weight` 参数，支持因子最大权重限制
+  - `BaseFactor` 基类新增 `is_visible` 参数，支持因子可见性控制
+  - 所有算法类（`FactorByFixed`、`FactorByLinear`、`FactorByNormalize`、`FactorByThreshold`、`FactorByValue`）构造函数统一支持新参数
+
 ## [1.1.0] - 2025-08-13
 
 ### 新增功能

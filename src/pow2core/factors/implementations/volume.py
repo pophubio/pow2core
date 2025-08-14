@@ -21,6 +21,7 @@ class VolumeFactorByLinear(FactorByLinear):
         min_weight: Decimal = Decimal("1.00"),
         max_weight: Decimal = Decimal("5.00"),
         precision: int = 2,
+        is_visible: bool = True,
         **kwargs,
     ):
         super().__init__(
@@ -30,6 +31,7 @@ class VolumeFactorByLinear(FactorByLinear):
             min_weight=min_weight,
             max_weight=max_weight,
             precision=precision,
+            is_visible=is_visible,
             **kwargs,
         )
 
@@ -50,6 +52,8 @@ class VolumeFactorByLogNormalize(FactorByNormalize):
         alpha_step: float,
         tolerance: float,
         precision: int = 2,
+        max_weight: Decimal = Decimal(1),
+        is_visible: bool = True,
         **kwargs,
     ):
         super().__init__(
@@ -61,6 +65,8 @@ class VolumeFactorByLogNormalize(FactorByNormalize):
             alpha_step=alpha_step,
             tolerance=tolerance,
             precision=precision,
+            max_weight=max_weight,
+            is_visible=is_visible,
             **kwargs,
         )
 

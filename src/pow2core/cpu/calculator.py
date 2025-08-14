@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+from decimal import Decimal
 
 from .schema import CPUResult
 from ..config.schema import CPUConfig, FactorConfig
@@ -24,7 +25,8 @@ class CPUCalculator:
                     f"{child.name}_factor": self.load_factor(child)
                     for child in factor_config.children
                 }
-                factor = factor_config.implementation(**children_factors)
+                impl_config = factor_config.config.model_dump() if factor_config.config else {}
+                factor = factor_config.implementation(**children_factors, **impl_config)
                 self.add_factor(factor)
             else:
                 factor = self.load_factor(factor_config)
@@ -80,3 +82,11 @@ class CPUCalculator:
             result.cpu *= factor_weight_result.weight
 
         return result
+
+    def calculate_with_given_result(self, result: dict[str, dict]) -> Decimal:
+        """使用给定的结果重新计算"""
+        cpu = Decimal(self.config.base)
+        for _, factor_weight_result in result.items():
+            cpu *= Decimal(factor_weight_result["weight"])
+
+        return cpu

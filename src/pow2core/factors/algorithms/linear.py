@@ -15,6 +15,7 @@ class FactorByLinear(BaseFactor):
         min_weight: int | float | Decimal = Decimal("1.00"),
         max_weight: int | float | Decimal = Decimal("5.00"),
         precision: int = 2,
+        is_visible: bool = True,
         **kwargs,
     ):
         """
@@ -28,7 +29,13 @@ class FactorByLinear(BaseFactor):
             max_weight: 最大权重 (default: 5.00)
             precision: 权重精度 (default: 2)
         """
-        super().__init__(name=name, algorithm=FACTOR_ALGORITHM_LINEAR, precision=precision, **kwargs)
+        super().__init__(
+            name=name,
+            algorithm=FACTOR_ALGORITHM_LINEAR,
+            precision=precision,
+            is_visible=is_visible,
+            **kwargs,
+        )
         self.max_value = Decimal(str(max_value))
         self.min_weight = Decimal(str(min_weight))
         self.max_weight = Decimal(str(max_weight))

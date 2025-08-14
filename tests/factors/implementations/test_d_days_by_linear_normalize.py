@@ -17,6 +17,8 @@ class TestDDaysFactorByLinearNormalize:
             now=now,
             tz_hours=8,
             precision=2,
+            max_weight=1.1,
+            is_visible=True,
         )
 
         assert factor.get_weight(now-timedelta(days=4)).weight == Decimal("1.00")
@@ -35,6 +37,8 @@ class TestDDaysFactorByLinearNormalize:
             now=now,
             tz_hours=8,
             precision=2,
+            max_weight=1.1,
+            is_visible=True,
         )
 
         assert factor.get_weight(now-timedelta(days=4)).weight == Decimal("1.00")

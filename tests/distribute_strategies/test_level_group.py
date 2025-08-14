@@ -1,6 +1,7 @@
 import pytest
 
 from pow2core.distribute_strategies.level_group import LevelGroupStrategy
+from pow2core.distribute_strategies.schema import LevelGroupThresholdItem
 
 
 class TestLevelGroupStrategy:
@@ -8,10 +9,11 @@ class TestLevelGroupStrategy:
         """测试使用有效参数初始化"""
         group_ratios = [0.1, 0.3, 0.6]
         base_diamond_groups = [100, 50, 25]
+
         level_thresholds = [
-            {"level": 1, "users": 50, "diamonds": 2500},
-            {"level": 2, "users": 100, "diamonds": 5000},
-            {"level": 3, "users": 200, "diamonds": 10000}
+            LevelGroupThresholdItem(level=1, users=50, diamonds=2500),
+            LevelGroupThresholdItem(level=2, users=100, diamonds=5000),
+            LevelGroupThresholdItem(level=3, users=200, diamonds=10000),
         ]
 
         strategy = LevelGroupStrategy(group_ratios, base_diamond_groups, level_thresholds)
@@ -19,9 +21,9 @@ class TestLevelGroupStrategy:
         assert strategy.group_ratios == [0.1, 0.3, 0.6]
         assert strategy.base_diamond_groups == [100, 50, 25]
         assert strategy.level_thresholds == [
-            {"level": 3, "users": 200, "diamonds": 10000},
-            {"level": 2, "users": 100, "diamonds": 5000},
-            {"level": 1, "users": 50, "diamonds": 2500},
+            LevelGroupThresholdItem(level=3, users=200, diamonds=10000),
+            LevelGroupThresholdItem(level=2, users=100, diamonds=5000),
+            LevelGroupThresholdItem(level=1, users=50, diamonds=2500),
         ]
 
     def test_init_with_invalid_ratios_sum(self):
@@ -29,7 +31,7 @@ class TestLevelGroupStrategy:
         group_ratios = [0.1, 0.3, 0.5]  # 总和为0.9，不等于1
         base_diamond_groups = [100, 50, 25]
         level_thresholds = [
-            {"level": 1, "users": 50, "diamonds": 2500}
+            LevelGroupThresholdItem(level=1, users=50, diamonds=2500)
         ]
 
         with pytest.raises(ValueError, match="每组人数占总人数的百分比之和必须为1"):
@@ -40,18 +42,18 @@ class TestLevelGroupStrategy:
         group_ratios = [0.5, 0.5]
         base_diamond_groups = [100, 50]
         level_thresholds = [
-            {"level": 3, "users": 200, "diamonds": 10000},
-            {"level": 1, "users": 50, "diamonds": 2500},
-            {"level": 2, "users": 100, "diamonds": 5000}
+            LevelGroupThresholdItem(level=3, users=200, diamonds=10000),
+            LevelGroupThresholdItem(level=1, users=50, diamonds=2500),
+            LevelGroupThresholdItem(level=2, users=100, diamonds=5000)
         ]
 
         strategy = LevelGroupStrategy(group_ratios, base_diamond_groups, level_thresholds)
 
         # 验证等级阈值已按level排序
         expected_sorted = [
-            {"level": 3, "users": 200, "diamonds": 10000},
-            {"level": 2, "users": 100, "diamonds": 5000},
-            {"level": 1, "users": 50, "diamonds": 2500},
+            LevelGroupThresholdItem(level=3, users=200, diamonds=10000),
+            LevelGroupThresholdItem(level=2, users=100, diamonds=5000),
+            LevelGroupThresholdItem(level=1, users=50, diamonds=2500),
         ]
         assert strategy.level_thresholds == expected_sorted
 
@@ -60,7 +62,7 @@ class TestLevelGroupStrategy:
         group_ratios = [0.5, 0.5]
         base_diamond_groups = [100, 50]
         level_thresholds = [
-            {"level": 1, "users": 50, "diamonds": 2500}
+            LevelGroupThresholdItem(level=1, users=50, diamonds=2500)
         ]
         strategy = LevelGroupStrategy(group_ratios, base_diamond_groups, level_thresholds)
 
@@ -78,7 +80,7 @@ class TestLevelGroupStrategy:
         group_ratios = [0.5, 0.5]
         base_diamond_groups = [100, 50]
         level_thresholds = [
-            {"level": 1, "users": 50, "diamonds": 2500}
+            LevelGroupThresholdItem(level=1, users=50, diamonds=2500)
         ]
         strategy = LevelGroupStrategy(group_ratios, base_diamond_groups, level_thresholds)
 
@@ -95,8 +97,8 @@ class TestLevelGroupStrategy:
         group_ratios = [0.5, 0.5]
         base_diamond_groups = [100, 50]
         level_thresholds = [
-            {"level": 1, "users": 50, "diamonds": 2500},
-            {"level": 2, "users": 100, "diamonds": 5000}
+            LevelGroupThresholdItem(level=1, users=50, diamonds=2500),
+            LevelGroupThresholdItem(level=2, users=100, diamonds=5000)
         ]
         strategy = LevelGroupStrategy(group_ratios, base_diamond_groups, level_thresholds)
 
@@ -114,9 +116,9 @@ class TestLevelGroupStrategy:
         group_ratios = [0.3, 0.4, 0.3]
         base_diamond_groups = [100, 50, 25]
         level_thresholds = [
-            {"level": 1, "users": 50, "diamonds": 2500},
-            {"level": 2, "users": 100, "diamonds": 5000},
-            {"level": 3, "users": 200, "diamonds": 10000}
+            LevelGroupThresholdItem(level=1, users=50, diamonds=2500),
+            LevelGroupThresholdItem(level=2, users=100, diamonds=5000),
+            LevelGroupThresholdItem(level=3, users=200, diamonds=10000)
         ]
         strategy = LevelGroupStrategy(group_ratios, base_diamond_groups, level_thresholds)
 
@@ -134,7 +136,7 @@ class TestLevelGroupStrategy:
         group_ratios = [0.5, 0.5]
         base_diamond_groups = [100, 50]
         level_thresholds = [
-            {"level": 1, "users": 50, "diamonds": 2500}
+            LevelGroupThresholdItem(level=1, users=50, diamonds=2500)
         ]
         strategy = LevelGroupStrategy(group_ratios, base_diamond_groups, level_thresholds)
         
@@ -149,7 +151,7 @@ class TestLevelGroupStrategy:
         group_ratios = [0.3, 0.4, 0.3]
         base_diamond_groups = [100, 50, 25]
         level_thresholds = [
-            {"level": 1, "users": 50, "diamonds": 2500}
+            LevelGroupThresholdItem(level=1, users=50, diamonds=2500)
         ]
         strategy = LevelGroupStrategy(group_ratios, base_diamond_groups, level_thresholds)
         
@@ -164,7 +166,7 @@ class TestLevelGroupStrategy:
         group_ratios = [0.5, 0.5]
         base_diamond_groups = [100, 50]
         level_thresholds = [
-            {"level": 1, "users": 50, "diamonds": 2500}
+            LevelGroupThresholdItem(level=1, users=50, diamonds=2500)
         ]
         strategy = LevelGroupStrategy(group_ratios, base_diamond_groups, level_thresholds)
 
@@ -179,7 +181,7 @@ class TestLevelGroupStrategy:
         group_ratios = [0.5, 0.5]
         base_diamond_groups = [100, 50]
         level_thresholds = [
-            {"level": 1, "users": 50, "diamonds": 2500}
+            LevelGroupThresholdItem(level=1, users=50, diamonds=2500)
         ]
         strategy = LevelGroupStrategy(group_ratios, base_diamond_groups, level_thresholds)
 
@@ -193,9 +195,9 @@ class TestLevelGroupStrategy:
         group_ratios = [0.2, 0.3, 0.5]
         base_diamond_groups = [200, 100, 50]
         level_thresholds = [
-            {"level": 1, "users": 50, "diamonds": 2500},
-            {"level": 2, "users": 100, "diamonds": 5000},
-            {"level": 3, "users": 200, "diamonds": 10000}
+            LevelGroupThresholdItem(level=1, users=50, diamonds=2500),
+            LevelGroupThresholdItem(level=2, users=100, diamonds=5000),
+            LevelGroupThresholdItem(level=3, users=200, diamonds=10000)
         ]
         strategy = LevelGroupStrategy(group_ratios, base_diamond_groups, level_thresholds)
         total_users = 150
@@ -219,7 +221,7 @@ class TestLevelGroupStrategy:
         group_ratios = [1.0]
         base_diamond_groups = [100]
         level_thresholds = [
-            {"level": 1, "users": 50, "diamonds": 2500}
+            LevelGroupThresholdItem(level=1, users=50, diamonds=2500)
         ]
         strategy = LevelGroupStrategy(group_ratios, base_diamond_groups, level_thresholds)
 
@@ -232,7 +234,7 @@ class TestLevelGroupStrategy:
         group_ratios = [0.5, 0.5]
         base_diamond_groups = [100, 50]
         level_thresholds = [
-            {"level": 1, "users": 50, "diamonds": 2500}
+            LevelGroupThresholdItem(level=1, users=50, diamonds=2500)
         ]
         strategy = LevelGroupStrategy(group_ratios, base_diamond_groups, level_thresholds)
 
@@ -245,7 +247,7 @@ class TestLevelGroupStrategy:
         group_ratios = [0.5, 0.5]
         base_diamond_groups = [0, 0]
         level_thresholds = [
-            {"level": 1, "users": 50, "diamonds": 2500}
+            LevelGroupThresholdItem(level=1, users=50, diamonds=2500)
         ]
         strategy = LevelGroupStrategy(group_ratios, base_diamond_groups, level_thresholds)
 
@@ -258,7 +260,7 @@ class TestLevelGroupStrategy:
         group_ratios = [0.3, 0.3, 0.4]
         base_diamond_groups = [100, 50, 25]
         level_thresholds = [
-            {"level": 1, "users": 50, "diamonds": 2500}
+            LevelGroupThresholdItem(level=1, users=50, diamonds=2500)
         ]
         strategy = LevelGroupStrategy(group_ratios, base_diamond_groups, level_thresholds)
 

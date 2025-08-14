@@ -14,8 +14,22 @@ from ..schema import FactorWeightResult, RareFactorByFixedConfig, RareFactorByNo
 )
 class RareFactorByFixed(FactorByFixed):
     """OG卡使用稀有度固定权重"""
-    def __init__(self, weights: dict[int | Decimal, int | Decimal], precision: int = 2, **kwargs):
-        super().__init__(name=FACTOR_NAME_RARE, weights=weights, precision=precision, **kwargs)
+    def __init__(
+        self,
+        weights: dict[int | Decimal, int | Decimal],
+        precision: int = 2,
+        max_weight: Decimal = Decimal(1),
+        is_visible: bool = True,
+        **kwargs,
+    ):
+        super().__init__(
+            name=FACTOR_NAME_RARE,
+            weights=weights,
+            precision=precision,
+            max_weight=max_weight,
+            is_visible=is_visible,
+            **kwargs,
+        )
 
 
 @FactorRegistry.register(
@@ -32,6 +46,8 @@ class RareFactorByLinearNormalize(FactorByNormalize):
         max_rare: int,
         alpha: int,
         precision: int = 2,
+        max_weight: Decimal = Decimal(1),
+        is_visible: bool = True,
         **kwargs,
     ):
         self.min_rare = min_rare
@@ -45,6 +61,8 @@ class RareFactorByLinearNormalize(FactorByNormalize):
             alpha=alpha,
             method=NORMALIZE_METHOD_LINEAR,
             precision=precision,
+            max_weight=max_weight,
+            is_visible=is_visible,
             **kwargs,
         )
 

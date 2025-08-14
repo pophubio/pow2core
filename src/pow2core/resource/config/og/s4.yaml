@@ -28,6 +28,8 @@ cpu:
       priority: 6  # 优先级6
       config:
         algorithm: fixed  # 固定值算法
+        max_weight: 5
+        is_visible: true
         weights:
           1: 5  # 稀有度1权重(金卡)
           2: 2  # 稀有度2权重(银卡)
@@ -38,6 +40,8 @@ cpu:
       priority: 2
       config:
         algorithm: fixed  # 固定值算法
+        max_weight: 1.5
+        is_visible: true
         weights:
           false: 1  # 没卡槽权重
           true: 1.5  # 有卡槽权重
@@ -55,6 +59,8 @@ cpu:
         multiplier: 10  # 倍数调节
         created_at: "2025-02-06 10:16:07+00"  # 合集创建时间
         tz_hours: 8  # 时区偏移
+        max_weight: 1.1
+        is_visible: true
 
     # 交易量因子
     - name: volume
@@ -67,6 +73,8 @@ cpu:
         min_alpha: 0  # 最小alpha值
         tolerance: 0.1  # alpha容差
         alpha_step: 0.002  # alpha步长
+        max_weight: 20
+        is_visible: true
 
     # 变压器因子
     - name: combination
@@ -75,6 +83,8 @@ cpu:
         algorithm: value  # 值算法
         interval: 0.025  # 区间步长
         precision: 3  # 精度
+        max_weight: 30
+        is_visible: true
 
     # 挂单天数因子
     - name: listing_days
@@ -86,6 +96,8 @@ cpu:
         max_weight: 5  # 最大权重
         min_weight: 1  # 最小权重
         tz_hours: 8  # 时区偏移
+        max_weight: 5
+        is_visible: true
 
     # 是否正在挂单因子
     - name: is_listing
@@ -95,6 +107,8 @@ cpu:
         weights:
           true: 0  # 是正在挂单权重
           false: 1  # 不是正在挂单权重
+        max_weight: 1
+        is_visible: false
 
     # POP用户因子
     - name: pop_user
@@ -104,6 +118,8 @@ cpu:
         weights:
           true: 1  # 是POP用户权重
           false: 0  # 不是POP用户权重
+        max_weight: 1
+        is_visible: false
 
 # 钻石奖励配置
 diamond:

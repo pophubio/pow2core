@@ -22,6 +22,8 @@ class AssetFactorByLogNormalize(FactorByNormalize):
         alpha_step: float,
         tolerance: float,
         precision: int = 2,
+        max_weight: Decimal = Decimal(1),
+        is_visible: bool = True,
         **kwargs,
     ):
         super().__init__(
@@ -33,6 +35,8 @@ class AssetFactorByLogNormalize(FactorByNormalize):
             alpha_step=alpha_step,
             tolerance=tolerance,
             precision=precision,
+            max_weight=max_weight,
+            is_visible=is_visible,
             **kwargs,
         )
 

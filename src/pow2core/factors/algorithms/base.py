@@ -30,10 +30,20 @@ class Factor(Protocol):
 
 class BaseFactor(ABC):  # noqa: B024
     """Base class for weight factors"""
-    def __init__(self, name: str, algorithm: str, precision: int = 2, **kwargs):
+    def __init__(
+        self,
+        name: str,
+        algorithm: str,
+        precision: int = 2,
+        max_weight: Decimal = Decimal(1),
+        is_visible: bool = True,
+        **kwargs,
+    ):
         self.name = name
         self.algorithm = algorithm
         self.precision = precision
+        self.max_weight = Decimal(max_weight)
+        self.is_visible = is_visible
         self.kwargs = kwargs
 
     def get_weight(self, value: int | float | Decimal) -> FactorWeightResult:  # noqa: B027

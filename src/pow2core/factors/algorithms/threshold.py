@@ -13,12 +13,21 @@ class FactorByThreshold(BaseFactor):
         thresholds: list[int | float | Decimal],
         weights: list[int | float | Decimal],
         precision: int = 2,
+        max_weight: Decimal = Decimal(1),
+        is_visible: bool = True,
         **kwargs,
     ):
         """
         初始化阈值计算因子
         """
-        super().__init__(name, FACTOR_ALGORITHM_THRESHOLD, precision, **kwargs)
+        super().__init__(
+            name=name,
+            algorithm=FACTOR_ALGORITHM_THRESHOLD,
+            precision=precision,
+            max_weight=max_weight,
+            is_visible=is_visible,
+            **kwargs,
+        )
         if len(thresholds) != len(weights):
             raise ValueError("Thresholds and weights must have the same length")
 

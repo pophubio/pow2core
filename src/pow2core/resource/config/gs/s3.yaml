@@ -30,6 +30,8 @@ cpu:
         algorithm: value  # 值算法
         interval: 0.025  # 区间步长
         precision: 3  # 精度
+        max_weight: 30  # 最大权重
+        is_visible: true  # 是否可见
 
     # 持有资产因子
     - name: asset
@@ -42,6 +44,8 @@ cpu:
         max_alpha: 30  # 最大alpha
         tolerance: 0.1  # alpha容差
         alpha_step: 0.1  # alpha步长
+        max_weight: 3  # 最大权重
+        is_visible: true  # 是否可见
 
     # 是否达到挖矿上限因子
     - name: mining_limit_reached
@@ -51,6 +55,8 @@ cpu:
         weights:
           true: 0  # 达到挖矿上限权重
           false: 1  # 未达到挖矿上限权重
+        max_weight: 1
+        is_visible: false
 
 # 钻石奖励配置
 diamond:

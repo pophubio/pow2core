@@ -23,6 +23,7 @@ class ListingDaysFactorByLinear(FactorByLinear):
         min_weight: Decimal = Decimal("1.00"),
         max_weight: Decimal = Decimal("5.00"),
         precision: int = 2,
+        is_visible: bool = True,
         **kwargs,
     ):
         self.tz = timezone(timedelta(hours=tz_hours))
@@ -34,6 +35,7 @@ class ListingDaysFactorByLinear(FactorByLinear):
             min_weight=min_weight,
             max_weight=max_weight,
             precision=precision,
+            is_visible=is_visible,
             **kwargs,
         )
 

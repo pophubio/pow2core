@@ -8,6 +8,8 @@ class BaseFactorConfig(BaseModel):
     """因子配置基类"""
     algorithm: str = Field(description="算法")
     precision: int = Field(description="精度", default=2)
+    max_weight: Decimal = Field(description="最大权重", default=Decimal(1))
+    is_visible: bool = Field(description="是否可见", default=True)
 
 
 class AssetFactorByNormalizeConfig(BaseFactorConfig):
@@ -57,6 +59,10 @@ class ListingDaysFactorByLinearConfig(BaseFactorConfig):
     min_weight: Decimal = Field(description="最小权重")
     max_weight: Decimal = Field(description="最大权重")
     tz_hours: int = Field(description="时区偏移", default=8)
+
+
+class ListingStatsFactorConfig(BaseFactorConfig):
+    ...
 
 
 class RareFactorByFixedConfig(BaseFactorConfig):

@@ -38,7 +38,7 @@ class TestSlotFactorByFixed:
     def test_load_tokens_with_slot_simple_case(self):
         weights = {True: 10, False: 5}
         rare_requirements = {1: 2, 2: 1}
-        factor = SlotFactorByFixed(weights, rare_requirements)
+        factor = SlotFactorByFixed(weights, rare_requirements, max_weight=10, is_visible=True)
 
         rare_balances = {
             1: [(1, 101), (1, 102), (1, 103), (1, 104)],  # 4 tokens of rare 1
@@ -114,7 +114,7 @@ class TestSlotFactorByFixed:
     def test_get_weight_token_with_slot(self):
         weights = {True: 15, False: 3}
         rare_requirements = {1: 1}
-        factor = SlotFactorByFixed(weights, rare_requirements)
+        factor = SlotFactorByFixed(weights, rare_requirements, max_weight=15, is_visible=True)
 
         # Add some tokens to slot list
         factor.tokens_with_slot = [(1, 101), (1, 102), (1, 103)]
@@ -127,7 +127,7 @@ class TestSlotFactorByFixed:
     def test_get_weight_token_without_slot(self):
         weights = {True: 15, False: 3}
         rare_requirements = {1: 1}
-        factor = SlotFactorByFixed(weights, rare_requirements)
+        factor = SlotFactorByFixed(weights, rare_requirements, max_weight=15, is_visible=True)
 
         # Add some tokens to slot list
         factor.tokens_with_slot = [(1, 101), (1, 102), (1, 103)]
@@ -139,7 +139,7 @@ class TestSlotFactorByFixed:
     def test_get_weight_with_decimal_weights_and_precision(self):
         weights = {True: Decimal('12.555'), False: Decimal('2.777')}
         rare_requirements = {1: 1}
-        factor = SlotFactorByFixed(weights, rare_requirements, precision=3)
+        factor = SlotFactorByFixed(weights, rare_requirements, precision=3, max_weight=15, is_visible=True)
 
         factor.tokens_with_slot = [(1, 101)]
 
@@ -150,7 +150,7 @@ class TestSlotFactorByFixed:
     def test_get_weight_empty_slot_list(self):
         weights = {True: 10, False: 1}
         rare_requirements = {1: 1}
-        factor = SlotFactorByFixed(weights, rare_requirements)
+        factor = SlotFactorByFixed(weights, rare_requirements, max_weight=10, is_visible=True)
 
         # No tokens in slot list, so all should get False weight
         assert factor.get_weight(collection_id=1, token_id=101).weight == Decimal('1.00')
@@ -160,7 +160,7 @@ class TestSlotFactorByFixed:
         """Test a complex scenario with multiple rares and requirements"""
         weights = {True: 20, False: 2}
         rare_requirements = {1: 2, 2: 1, 3: 3}
-        factor = SlotFactorByFixed(weights, rare_requirements, precision=1)
+        factor = SlotFactorByFixed(weights, rare_requirements, precision=1, max_weight=20, is_visible=True)
 
         rare_balances = {
             1: [(1, 1001), (1, 1002), (1, 1003), (1, 1004), (1, 1005), (1, 1006)],  # 6 tokens

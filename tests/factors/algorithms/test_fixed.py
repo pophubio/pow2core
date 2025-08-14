@@ -7,7 +7,7 @@ from pow2core.factors.algorithms.fixed import FactorByFixed
 class TestFactorByFixed:
     def test_init_with_int_weights(self):
         weights = {1: 10, 2: 20, 3: 30}
-        factor = FactorByFixed("test_factor", weights)
+        factor = FactorByFixed("test_factor", weights, max_weight=30, is_visible=True)
 
         assert factor.name == "test_factor"
         assert factor.weights == weights
@@ -15,7 +15,7 @@ class TestFactorByFixed:
 
     def test_init_with_decimal_weights(self):
         weights = {Decimal('1.5'): Decimal('10.5'), Decimal('2.5'): Decimal('20.5')}
-        factor = FactorByFixed("test_factor", weights, precision=3)
+        factor = FactorByFixed("test_factor", weights, precision=3, max_weight=20.5, is_visible=True)
 
         assert factor.name == "test_factor"
         assert factor.weights == weights
@@ -23,14 +23,14 @@ class TestFactorByFixed:
 
     def test_init_with_mixed_weights(self):
         weights = {1: Decimal('10.5'), Decimal('2.5'): 20}
-        factor = FactorByFixed("test_factor", weights)
+        factor = FactorByFixed("test_factor", weights, precision=3, max_weight=20.5, is_visible=True)
 
         assert factor.name == "test_factor"
         assert factor.weights == weights
 
     def test_get_weight_with_int_value(self):
         weights = {1: 10, 2: 20, 3: 30}
-        factor = FactorByFixed("test_factor", weights)
+        factor = FactorByFixed("test_factor", weights, max_weight=30, is_visible=True)
 
         result = factor.get_weight(1)
         assert result.value == 1
@@ -38,7 +38,7 @@ class TestFactorByFixed:
 
     def test_get_weight_with_decimal_value(self):
         weights = {Decimal('1.5'): Decimal('10.5')}
-        factor = FactorByFixed("test_factor", weights)
+        factor = FactorByFixed("test_factor", weights, max_weight=20.5, is_visible=True)
 
         result = factor.get_weight(Decimal('1.5'))
         assert result.value == Decimal('1.5')
@@ -46,7 +46,7 @@ class TestFactorByFixed:
 
     def test_get_weight_precision_control(self):
         weights = {1: Decimal('10.123456')}
-        factor = FactorByFixed("test_factor", weights, precision=4)
+        factor = FactorByFixed("test_factor", weights, precision=4, max_weight=15, is_visible=True)
 
         result = factor.get_weight(1)
         assert result.value == 1
@@ -81,7 +81,7 @@ class TestFactorByFixed:
 
     def test_zero_precision(self):
         weights = {1: Decimal('10.789')}
-        factor = FactorByFixed("test_factor", weights, precision=0)
+        factor = FactorByFixed("test_factor", weights, precision=0, max_weight=11, is_visible=True)
 
         result = factor.get_weight(1)
         assert result.value == 1
@@ -89,7 +89,7 @@ class TestFactorByFixed:
 
     def test_large_decimal_values(self):
         weights = {Decimal('999999999999.999'): Decimal('888888888888.888')}
-        factor = FactorByFixed("test_factor", weights, precision=3)
+        factor = FactorByFixed("test_factor", weights, precision=3, max_weight=1000000000000, is_visible=True)
 
         result = factor.get_weight(Decimal('999999999999.999'))
         assert result.value == Decimal('999999999999.999')

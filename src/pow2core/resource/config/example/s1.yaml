@@ -31,6 +31,8 @@ cpu:
         min_rare: 1  # 最小稀有度
         max_rare: 9432  # 最大稀有度
         alpha: 1047  # 平滑因子
+        max_weight: 10  # 最大权重
+        is_visible: true  # 是否可见
 
     # 持有天数因子
     - name: d_days
@@ -41,6 +43,8 @@ cpu:
         multiplier: 10  # 倍数调节
         created_at: "2025-02-06 10:16:07+00"  # 合集创建时间
         tz_hours: 8  # 时区偏移
+        max_weight: 1.1  # 最大权重
+        is_visible: true  # 是否可见
 
     # 变压器因子
     - name: combination
@@ -49,10 +53,16 @@ cpu:
         algorithm: value  # 数值算法
         interval: 0.025  # 区间步长
         precision: 3  # 精度
+        max_weight: 1.1  # 最大权重
+        is_visible: true  # 是否可见
 
     # 挂单统计因子
     - name: listing_stats
       priority: 2  # 优先级2
+      config:
+        algorithm: ''  # 固定值算法
+        max_weight: 5  # 最大权重
+        is_visible: true  # 是否可见
       children:
         # 挂单天数子因子
         - name: listing_days
@@ -64,12 +74,15 @@ cpu:
             min_weight: 1  # 最小权重
             max_weight: 5  # 最大权重
             tz_hours: 8  # 时区偏移
+            is_visible: true  # 是否可见
 
         # 挂单数量子因子
         - name: listing_count
           priority: 1
           config:
             algorithm: threshold  # 阈值算法
+            max_weight: 1  # 最大权重
+            is_visible: true  # 是否可见
             weights:  # 权重分级
               - 0.25  # 高阈值权重
               - 0.5   # 中阈值权重

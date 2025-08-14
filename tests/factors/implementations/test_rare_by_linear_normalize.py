@@ -10,6 +10,8 @@ class TestRareFactorByLinearNormalize:
             max_rare=9432,
             alpha=1047,
             precision=2,
+            max_weight=10,
+            is_visible=True,
         )
 
         assert factor.get_weight(1).weight == Decimal("10.00")

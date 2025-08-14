@@ -18,6 +18,8 @@ class SlotFactorByFixed(FactorByFixed):
         weights: dict[bool, int | Decimal],
         rare_requirements: dict[int, int],
         precision: int = 2,
+        max_weight: Decimal = Decimal(1),
+        is_visible: bool = True,
         **kwargs,
     ):
         self.rare_requirements = rare_requirements
@@ -25,6 +27,8 @@ class SlotFactorByFixed(FactorByFixed):
             name=FACTOR_NAME_SLOT,
             weights=weights,
             precision=precision,
+            max_weight=max_weight,
+            is_visible=is_visible,
             **kwargs,
         )
         self.tokens_with_slot: list[tuple[int, int]] = []
