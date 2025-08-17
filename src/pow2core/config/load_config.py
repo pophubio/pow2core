@@ -25,13 +25,15 @@ class LoadMineSeasonConfig:
     """加载挖钻赛季配置"""
 
     def __init__(self) -> None:
-        self.config_dir = Path(__file__).parent.parent / "resource/config"
+        self.default_config_dir = Path(__file__).parent.parent / "resource/config"
 
-    def load_config(self, season_slug: str) -> MineSeasonConfig:
+    def load_config(self, season_slug: str | None = None, config_file: str | None = None) -> MineSeasonConfig:
         """
-        加载挖钻赛季配置, 并格式化
+            加载挖钻赛季配置, 并格式化
+            优先使用参数中的config_file加载, 如果config_file为空, 则使用season_slug加载
         """
-        yaml_config = self.load_yaml_config(season_slug)
+        config_path = self.get_config_path(season_slug, config_file)
+        yaml_config = self.load_yaml_config(config_path)
 
         collection_config = self.load_collection_config(yaml_config)
         season_config = self.load_season_config(yaml_config)
@@ -49,16 +51,21 @@ class LoadMineSeasonConfig:
             combination=combination_config,
         )
 
-    def load_yaml_config(self, season_slug: str) -> dict:
-        """从yaml中读取配置"""
-        season_slug = season_slug.lower().split("-")
-        if len(season_slug) != 2:
-            raise ValueError(f"Invalid season slug: {season_slug}")
+    def get_config_path(self, season_slug: str, config_file: str | None = None) -> Path:
+        if config_file:
+            config_path = Path(config_file)
+        else:
+            season_slug = season_slug.lower().split("-")
+            if len(season_slug) != 2:
+                raise ValueError(f"Invalid season slug: {season_slug}")
+            config_path = self.default_config_dir / season_slug[0] / f"{season_slug[1]}.yaml"
 
-        config_path = self.config_dir / season_slug[0] / f"{season_slug[1]}.yaml"
         if not config_path.exists():
             raise FileNotFoundError(f"Config file not found: {config_path}")
+        return config_path
 
+    def load_yaml_config(self, config_path: Path) -> dict:
+        """从yaml中读取配置"""
         with config_path.open() as f:
             return yaml.safe_load(f)
 
