@@ -5,7 +5,7 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)，
 项目遵循 [语义化版本控制](https://semver.org/spec/v2.0.0.html) 规范。
 
-## [1.2.0] - 2025-08-17
+## [1.2.0] - 2025-08-19
 
 ### 新增功能
 - **因子系统架构增强**:
@@ -15,6 +15,11 @@
 
 - **配置系统增强**:
   - `LoadMineSeasonConfig` 新增 `config_file` 参数，支持直接通过文件路径加载配置
+
+- **增加新赛季配置**
+  - gcw-s7
+  - gs-s4
+  - og-s5
 
 ## [1.1.0] - 2025-08-13
 
