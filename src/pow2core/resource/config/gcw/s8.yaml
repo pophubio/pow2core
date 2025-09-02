@@ -1,4 +1,4 @@
-# 蝉甲S7挖钻活动的核心配置文件
+# 蝉甲S8挖钻活动的核心配置文件
 
 collection:
   slugs:
@@ -10,9 +10,9 @@ image: /images/nft/gcw.webp  # 活动展示图片
 
 # 赛季基本信息
 season:
-  slug: gcw-s7  # 赛季唯一标识
-  title: PoW² 蝉甲S7挖钻  # 赛季显示名称
-  start_at: "2025-08-18 20:00:00+08"  # 开始时间（北京时间）
+  slug: gcw-s8  # 赛季唯一标识
+  title: PoW² 蝉甲S8挖钻  # 赛季显示名称
+  start_at: "2025-09-03 20:00:00+08"  # 开始时间（北京时间）
   epoch_hours: 24  # 每期持续24小时
   max_epoch: 15  # 总共15期
   priority: 1  # 优先级
@@ -166,7 +166,7 @@ diamond:
 
 # 变压器配置
 combination:
-  name: gcw-s7-gcr变压器  # 变压器名称
+  name: gcw-s8-gcr变压器  # 变压器名称
   base_ratio: 1  # 基础倍数
   max_ratio: 30  # 最大倍数上限
   components:  # 变压器组件配置
