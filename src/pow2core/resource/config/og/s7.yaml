@@ -1,0 +1,230 @@
+# OG卡S7挖钻活动的核心配置文件
+
+collection:
+  slugs:
+    - GoldenCicadaOG  # OG卡NFT合集
+    - GoldenCicadaDAO  # DAO币NFT合集
+
+category: normal  # 普通类别挖矿活动
+
+image: /images/nft/gc-og/1.webp  # 活动展示图片
+
+# 赛季基本信息
+season:
+  slug: og-s7  # 赛季唯一标识
+  title: PoW² OG卡S7挖钻  # 赛季显示名称
+  start_at: "2025-09-19 20:00:00+08"  # 开始时间（北京时间）
+  epoch_hours: 24  # 每期持续24小时
+  max_epoch: 15  # 总共15期
+  priority: 1  # 优先级
+  per_epoch_diamonds: 200000  # 每期发放20万钻石
+
+# CPU算力计算配置
+cpu:
+  base: 10000  # 基础算力值
+  factors:
+    # 稀有度因子
+    - name: rare
+      priority: 6  # 优先级6
+      config:
+        algorithm: fixed  # 固定值算法
+        max_weight: 5
+        is_visible: true
+        weights:
+          1: 5  # 稀有度1权重(金卡)
+          2: 2  # 稀有度2权重(银卡)
+          3: 1  # 稀有度3权重(铜卡)
+
+    # 卡槽因子
+    - name: slot
+      priority: 2
+      config:
+        algorithm: fixed  # 固定值算法
+        max_weight: 1.5
+        is_visible: true
+        weights:
+          false: 1  # 没卡槽权重
+          true: 1.5  # 有卡槽权重
+        rare_requirements:  # 每个稀有度所需的 token 数量
+          1: 1  # 金卡所需的 token 数量
+          2: 2  # 银卡所需的 token 数量
+          3: 3  # 铜卡所需的 token 数量
+
+    # 持有天数因子
+    - name: d_days
+      priority: 4  # 优先级4
+      config:
+        algorithm: normalize  # 归一化算法
+        method: linear  # 线性归一化
+        multiplier: 10  # 倍数调节
+        created_at: "2025-02-06 10:16:07+00"  # 合集创建时间
+        tz_hours: 8  # 时区偏移
+        max_weight: 1.1
+        is_visible: true
+
+    # 交易量因子
+    - name: volume
+      priority: 3  # 优先级3
+      config:
+        algorithm: normalize  # 归一化算法
+        method: log  # 对数归一化
+        ratio: 20  # 期望最大最小值的比例
+        max_alpha: 10  # 最大alpha值
+        min_alpha: 0  # 最小alpha值
+        tolerance: 0.1  # alpha容差
+        alpha_step: 0.002  # alpha步长
+        max_weight: 20
+        is_visible: true
+
+    # 变压器因子
+    - name: combination
+      priority: 1  # 优先级1
+      config:
+        algorithm: value  # 值算法
+        interval: 0.025  # 区间步长
+        precision: 3  # 精度
+        max_weight: 30
+        is_visible: true
+
+    # 挂单天数因子
+    - name: listing_days
+      priority: 3  # 优先级3
+      config:
+        algorithm: linear  # 线性算法
+        min_listing_days: 1  # 最小挂单天数
+        max_listing_days: 10  # 最大挂单天数
+        max_weight: 5  # 最大权重
+        min_weight: 1  # 最小权重
+        tz_hours: 8  # 时区偏移
+        max_weight: 5
+        is_visible: true
+
+    # 是否正在挂单因子
+    - name: is_listing
+      priority: 0
+      config:
+        algorithm: fixed  # 固定值算法
+        weights:
+          true: 0  # 是正在挂单权重
+          false: 1  # 不是正在挂单权重
+        max_weight: 1
+        is_visible: false
+
+    # POP用户因子
+    - name: pop_user
+      priority: 0
+      config:
+        algorithm: fixed  # 固定值算法
+        weights:
+          true: 1  # 是POP用户权重
+          false: 0  # 不是POP用户权重
+        max_weight: 1
+        is_visible: false
+
+# 钻石奖励配置
+diamond:
+  strategy: fixed_group  # 策略：固定组
+  config:
+    strict: false  # 严格模式
+    user_groups:
+      - 2  # 第1组
+      - 6  # 第2组
+      - 20  # 第3组
+      - 40  # 第4组
+      - 60  # 第5组
+      - 80  # 第6组
+      - 120  # 第7组
+      - 150  # 第8组
+      - 200  # 第9组
+      - 250  # 第10组
+      - 534  # 第11组
+    diamond_groups:
+      - 1500  # 第1组
+      - 1000  # 第2组
+      - 800  # 第3组
+      - 600  # 第4组
+      - 400  # 第5组
+      - 300  # 第6组
+      - 200  # 第7组
+      - 150  # 第8组
+      - 100  # 第9组
+      - 60  # 第10组
+      - 40  # 第11组
+
+# 变压器配置
+combination:
+  name: og-s7-gcr变压器  # 变压器名称
+  base_ratio: 1  # 基础倍数
+  max_ratio: 30  # 最大倍数上限
+  components:
+    - collection_slug: GoldenCicadaRelic  # 合集名称
+      token_id: 5  # 代币ID 5
+      min_amount: 0  # 最小数量（无限制）
+      max_amount: 0  # 最大数量（无限制）
+      per_ratio: "0.025"  # 每个提供0.025倍数
+      is_enable: true  # 启用状态
+      enable_at: null  # 启用时间
+
+    - collection_slug: GoldenCicadaRelic
+      token_id: 6
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+
+    - collection_slug: GoldenCicadaRelic
+      token_id: 7
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+
+    - collection_slug: GoldenCicadaRelic
+      token_id: 8
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+
+    - collection_slug: GoldenCicadaRelic
+      token_id: 9
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+
+    - collection_slug: GoldenCicadaRelic
+      token_id: 10
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+
+    - collection_slug: GoldenCicadaRelic
+      token_id: 11
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+
+    - collection_slug: GoldenCicadaRelic
+      token_id: 12
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+
+    - collection_slug: GoldenCicadaRelic  # 合集名称
+      token_id: 13  # 代币ID 13
+      min_amount: 0  # 最小数量（无限制）
+      max_amount: 0  # 最大数量（无限制）
+      per_ratio: "0.025"  # 每个提供0.025倍数
+      is_enable: true  # 启用状态
+      enable_at: null  # 启用时间

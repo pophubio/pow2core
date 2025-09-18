@@ -1,0 +1,185 @@
+# 金铲铲S5挖钻活动的核心配置文件
+
+collection:
+  slugs:
+    - GoldenShovel  # 金铲铲NFT合集
+
+category: rookie  # 新手类别挖矿活动
+
+image: /images/nft/gs.webp  # 活动展示图片
+
+# 赛季基本信息
+season:
+  slug: gs-s5  # 赛季唯一标识
+  title: PoW² 金铲铲S5挖钻  # 赛季显示名称
+  start_at: "2025-09-19 20:00:00+08"  # 开始时间（北京时间）
+  epoch_hours: 24  # 每期持续24小时
+  max_epoch: 15  # 总共15期
+  priority: 1  # 优先级
+  per_epoch_diamonds: 500000  # 每期发放50万钻石
+  inviter_diamond_reward_ratio: 1  # 邀请者钻石奖励比例
+
+# CPU算力计算配置
+cpu:
+  base: 10000  # 基础算力值
+  factors:
+    # 变压器因子
+    - name: combination
+      priority: 1  # 优先级1
+      config:
+        algorithm: value  # 值算法
+        interval: 0.025  # 区间步长
+        precision: 3  # 精度
+        max_weight: 30  # 最大权重
+        is_visible: true  # 是否可见
+
+    # 持有资产因子
+    - name: asset
+      priority: 2  # 优先级2
+      config:
+        algorithm: normalize  # 归一化算法
+        ratio: 3  # 期望最大最小值的比例
+        method: log  # 对数归一化
+        min_alpha: 0  # 最小alpha
+        max_alpha: 30  # 最大alpha
+        tolerance: 0.1  # alpha容差
+        alpha_step: 0.1  # alpha步长
+        max_weight: 3  # 最大权重
+        is_visible: true  # 是否可见
+
+    # 是否达到挖矿上限因子
+    - name: mining_limit_reached
+      priority: 0
+      config:
+        algorithm: fixed  # 固定值算法
+        weights:
+          true: 0  # 达到挖矿上限权重
+          false: 1  # 未达到挖矿上限权重
+        max_weight: 1
+        is_visible: false
+
+# 钻石奖励配置
+diamond:
+  strategy: level_group  # 策略：按等级分组
+  config:
+    thresholds:
+      - level: 1  # 第1级
+        users: 50  # 第1级用户数量
+        diamonds: 2500  # 第1级奖励钻石数量
+      - level: 2  # 第2级
+        users: 100  # 第2级用户数量
+        diamonds: 5000  # 第2级奖励钻石数量
+      - level: 3
+        users: 150
+        diamonds: 7500
+      - level: 4
+        users: 200
+        diamonds: 10000
+      - level: 5
+        users: 250
+        diamonds: 12500
+      - level: 6
+        users: 300
+        diamonds: 15000
+      - level: 7
+        users: 350
+        diamonds: 17500
+      - level: 8
+        users: 400
+        diamonds: 20000
+      - level: 9
+        users: 450
+        diamonds: 22500
+      - level: 10
+        users: 500
+        diamonds: 25000
+      - level: 11
+        users: 550
+        diamonds: 27500
+      - level: 12
+        users: 600
+        diamonds: 30000
+    group_ratios:  # 组人数比例
+      - 0.05
+      - 0.1
+      - 0.15
+      - 0.2
+      - 0.25
+      - 0.25
+    base_group_diamonds:  # 组基础奖励钻石数量
+    - 140
+    - 80
+    - 60
+    - 50
+    - 40
+    - 30
+
+# 变压器配置
+combination:
+  name: gs-s5-gcr变压器  # 变压器名称
+  base_ratio: 1  # 基础倍数
+  max_ratio: 30  # 最大倍数上限
+  components:
+    - collection_slug: GoldenCicadaRelic  # 合集名称
+      token_id: 5  # 代币ID 5
+      min_amount: 0  # 最小数量（无限制）
+      max_amount: 0  # 最大数量（无限制）
+      per_ratio: "0.025"  # 每个提供0.025倍数
+      is_enable: true  # 启用状态
+      enable_at: null  # 启用时间
+    - collection_slug: GoldenCicadaRelic
+      token_id: 6
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+    - collection_slug: GoldenCicadaRelic
+      token_id: 7
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+    - collection_slug: GoldenCicadaRelic
+      token_id: 8
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+    - collection_slug: GoldenCicadaRelic
+      token_id: 9
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+    - collection_slug: GoldenCicadaRelic
+      token_id: 10
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+    - collection_slug: GoldenCicadaRelic
+      token_id: 11
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+    - collection_slug: GoldenCicadaRelic
+      token_id: 12
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+    - collection_slug: GoldenCicadaRelic  # 合集名称
+      token_id: 13  # 代币ID 13
+      min_amount: 0  # 最小数量（无限制）
+      max_amount: 0  # 最大数量（无限制）
+      per_ratio: "0.025"  # 每个提供0.025倍数
+      is_enable: true  # 启用状态
+      enable_at: null  # 启用时间
