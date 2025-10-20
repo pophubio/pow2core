@@ -1,0 +1,245 @@
+# 蝉甲S11挖钻活动的核心配置文件
+
+collection:
+  slugs:
+    - GoldenCicadaWarrior  # 蝉甲NFT合集
+
+category: normal  # 普通类别挖矿活动
+
+image: /images/nft/gcw.webp  # 活动展示图片
+
+# 赛季基本信息
+season:
+  slug: gcw-s11  # 赛季唯一标识
+  title: PoW² 蝉甲S11挖钻  # 赛季显示名称
+  start_at: "2025-10-21 20:00:00+08"  # 开始时间（北京时间）
+  epoch_hours: 24  # 每期持续24小时
+  max_epoch: 15  # 总共15期
+  priority: 1  # 优先级
+  per_epoch_diamonds: 500000  # 每期发放50万钻石
+
+# CPU算力计算配置
+cpu:
+  base: 10000  # 基础算力值
+  factors:
+    # 稀有度因子
+    - name: rare
+      priority: 5  # 优先级5
+      config:
+        algorithm: normalize  # 归一化算法
+        method: linear  # 线性归一化
+        min_rare: 1  # 最小稀有度
+        max_rare: 9432  # 最大稀有度
+        alpha: 1047  # 平滑因子
+        max_weight: 10  # 最大权重
+        is_visible: true  # 是否可见
+
+    # 持有天数因子
+    - name: d_days
+      priority: 4  # 优先级4
+      config:
+        algorithm: normalize  # 归一化算法
+        method: linear  # 线性归一化
+        multiplier: 10  # 倍数调节
+        created_at: "2024-11-29 02:09:52+00"  # 合集创建时间
+        tz_hours: 8  # 时区偏移
+        max_weight: 1.1  # 最大权重
+        is_visible: true  # 是否可见
+
+    # 交易量因子
+    - name: volume
+      priority: 3  # 优先级3
+      config:
+        algorithm: normalize  # 归一化算法
+        method: log  # 对数归一化
+        ratio: 20  # 期望最大最小值的比例
+        max_alpha: 10  # 最大alpha值
+        min_alpha: 0  # 最小alpha值
+        tolerance: 0.1  # alpha容差
+        alpha_step: 0.002  # alpha步长
+        max_weight: 20  # 最大权重
+        is_visible: true  # 是否可见
+
+    # 变压器因子
+    - name: combination
+      priority: 1  # 优先级1
+      config:
+        algorithm: value  # 数值算法
+        interval: 0.025  # 区间步长
+        precision: 3  # 精度
+        max_weight: 30  # 最大权重
+        is_visible: true  # 是否可见
+
+    # 挂单统计因子
+    - name: listing_stats
+      priority: 2  # 优先级2
+      config:
+        algorithm: ''  # 固定值算法
+        max_weight: 5  # 最大权重
+        is_visible: true  # 是否可见
+      children:
+        # 挂单天数子因子
+        - name: listing_days
+          priority: 2
+          config:
+            algorithm: linear  # 线性算法
+            min_listing_days: 1  # 最小挂单天数
+            max_listing_days: 10  # 最大挂单天数
+            min_weight: 1  # 最小权重
+            max_weight: 5  # 最大权重
+            tz_hours: 8  # 时区偏移
+            is_visible: true  # 是否可见
+
+        # 挂单数量子因子
+        - name: listing_count
+          priority: 1
+          config:
+            algorithm: threshold  # 阈值算法
+            weights:  # 权重分级
+              - 0.25  # 高阈值权重
+              - 0.5   # 中阈值权重
+              - 1     # 低阈值权重
+            thresholds:  # 阈值分级
+              - 20  # 高阈值
+              - 10  # 中阈值
+              - 0   # 低阈值
+            max_weight: 1  # 最大权重
+            is_visible: true  # 是否可见
+
+    # 是否正在挂单因子
+    - name: is_listing
+      priority: 0
+      config:
+        algorithm: fixed  # 固定值算法
+        weights:
+          true: 0  # 是正在挂单权重
+          false: 1  # 不是正在挂单权重
+        max_weight: 1  # 最大权重
+        is_visible: false  # 是否可见
+
+    # POP用户因子
+    - name: pop_user
+      priority: 0
+      config:
+        algorithm: fixed  # 固定值算法
+        weights:
+          true: 1  # 是POP用户权重
+          false: 0  # 不是POP用户权重
+        max_weight: 1  # 最大权重
+        is_visible: false  # 是否可见
+
+# 钻石分配策略配置
+diamond:
+  strategy: fixed_group  # 固定分组策略
+  config:
+    strict: false  # 非严格模式，允许灵活分配
+    user_groups:  # 用户分组（按算力排名分组的用户数量）
+      - 1      # 第1名
+      - 2      # 第2-3名
+      - 7      # 第4-10名
+      - 20     # 第11-30名
+      - 40     # 第31-70名
+      - 100    # 第71-170名
+      - 200    # 第171-370名
+      - 400    # 第371-770名
+      - 800    # 第771-1570名
+      - 1200   # 第1571-2770名
+      - 1600   # 第2771-4370名
+      - 1800   # 第4371-6170名
+      - 2400   # 第6171-8570名
+      - 866    # 剩余用户
+    diamond_groups:  # 对应分组的钻石奖励
+      - 1000   # 第1名获得1000钻石
+      - 900    # 第2-3名每人900钻石
+      - 700    # 第4-10名每人700钻石
+      - 500    # 第11-30名每人500钻石
+      - 350    # 第31-70名每人350钻石
+      - 250    # 第71-170名每人250钻石
+      - 150    # 第171-370名每人150钻石
+      - 100    # 第371-770名每人100钻石
+      - 75     # 第771-1570名每人75钻石
+      - 60     # 第1571-2770名每人60钻石
+      - 50     # 第2771-4370名每人50钻石
+      - 40     # 第4371-6170名每人40钻石
+      - 30     # 第6171-8570名每人30钻石
+      - 20     # 剩余用户每人20钻石
+
+# 变压器配置
+combination:
+  name: gcw-s11-gcr变压器  # 变压器名称
+  base_ratio: 1  # 基础倍数
+  max_ratio: 30  # 最大倍数上限
+  components:  # 变压器组件配置
+    # GCR Token ID 5 变压器组件
+    - collection_slug: GoldenCicadaRelic  # 合集名称
+      token_id: 5  # 代币ID 5
+      min_amount: 0  # 最小数量（无限制）
+      max_amount: 0  # 最大数量（无限制）
+      per_ratio: "0.025"  # 每个提供0.025倍数
+      is_enable: true  # 启用状态
+      enable_at: null  # 启用时间
+
+    # GCR Token ID 6-12 变压器组件
+    - collection_slug: GoldenCicadaRelic
+      token_id: 6
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+
+    - collection_slug: GoldenCicadaRelic
+      token_id: 7
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+
+    - collection_slug: GoldenCicadaRelic
+      token_id: 8
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+
+    - collection_slug: GoldenCicadaRelic
+      token_id: 9
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+
+    - collection_slug: GoldenCicadaRelic
+      token_id: 10
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+
+    - collection_slug: GoldenCicadaRelic
+      token_id: 11
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+
+    - collection_slug: GoldenCicadaRelic
+      token_id: 12
+      min_amount: 0
+      max_amount: 0
+      per_ratio: "0.06"  # 每个提供0.06倍数
+      is_enable: true
+      enable_at: null
+
+    - collection_slug: GoldenCicadaRelic  # 合集名称
+      token_id: 13  # 代币ID 13
+      min_amount: 0  # 最小数量（无限制）
+      max_amount: 0  # 最大数量（无限制）
+      per_ratio: "0.025"  # 每个提供0.025倍数
+      is_enable: true  # 启用状态
+      enable_at: null  # 启用时间
