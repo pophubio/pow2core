@@ -1,6 +1,6 @@
 [project]
 name = "pow2core"
-version = "1.7.0"
+version = "1.8.0"
 description = "Pow2Core is a core library for Pow2 mining calculations"
 readme = "README.md"
 authors = [

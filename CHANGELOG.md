@@ -5,6 +5,12 @@
 格式基于 [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)，
 项目遵循 [语义化版本控制](https://semver.org/spec/v2.0.0.html) 规范。
 
+## [1.8.0] - 2025-12-07
+
+- **增加新赛季配置**
+  - gcw-s14
+  - og-s12
+
 ## [1.7.0] - 2025-11-21
 
 - **增加新赛季配置**
